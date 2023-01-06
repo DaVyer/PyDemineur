@@ -19,4 +19,17 @@ def type_cellule(cell: dict) -> bool:
         and type(cell[const.VISIBLE] == bool) and type(cell[const.CONTENU]) == int \
         and (0 <= cell[const.CONTENU] <= 8 or cell[const.CONTENU] == const.ID_MINE)
 
+def isContenuCorrect(a : int) -> bool:
+    """
+
+    :param a:
+    :return:
+    """
+    res = False
+    if type(a) == int:
+        if (a >= 0 and a < 9) or a == const.ID_MINE:
+            res = True
+    return res
+
+print(isContenuCorrect(10))
 
