@@ -33,3 +33,21 @@ def isContenuCorrect(a : int) -> bool:
 
 print(isContenuCorrect(10))
 
+def construireCellule(contenu : int = 0, visibilite : bool = False) -> dict:
+    """
+
+    :param contenu:
+    :param visibilite:
+    :return:
+    """
+    if not isContenuCorrect(contenu):
+        raise ValueError(f"construireCellule : le contenu {contenu} n’est pas correct")
+    if type(visibilite) != bool:
+        raise TypeError(f"construireCellule : le second paramètre {visibilite} n’est pas un booléen ")
+    return {const.CONTENU : contenu, const.VISIBLE : visibilite}
+
+print(construireCellule(0, False))
+
+
+
+
