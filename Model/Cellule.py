@@ -21,9 +21,12 @@ def type_cellule(cell: dict) -> bool:
 
 def isContenuCorrect(a : int) -> bool:
     """
+    Cette fonction permet de vérifier si l'entier rentré en paramètre représente bien le contenu d'une cellule.
 
-    :param a:
-    :return:
+    Si le contenu de la cellule représente bien un entier, la fonction renvoie True, sinon elle renvoie False.
+
+    :param a: Entier passé en paramètre
+    :return: Renvoie True si la cellule est bien comprise entre 0 et 8 compris ou si elle correspond à la constante ID_MINE
     """
     res = False
     if type(a) == int:
@@ -31,23 +34,75 @@ def isContenuCorrect(a : int) -> bool:
             res = True
     return res
 
-print(isContenuCorrect(10))
-
-def construireCellule(contenu : int = 0, visibilite : bool = False) -> dict:
+def construireCellule(contenu : int = 0, visible : bool = False) -> dict:
     """
+    Cette fonction permet de renvoyer un dictionnaire comprenant le contenu de la case et sa visibilité.
 
-    :param contenu:
-    :param visibilite:
-    :return:
+    Si le contenu n'est pas compris entre 0 et 8 inclus, une erreur de type ValueError apparait, et si la visibilité ne correspond pas à un
+    booléen, la fonction renvoie une erreur de type TypeError.
+
+    :param contenu: Variable représentant la valeur de la case, initialisé à 1.
+    :param visibilite: Variable représentant la visibilité de la case, initialisé à False.
+    :return: La fonction retourne un dictionnaire avec comme clé le contenu et comme valeur la visibilité.
     """
     if not isContenuCorrect(contenu):
         raise ValueError(f"construireCellule : le contenu {contenu} n’est pas correct")
-    if type(visibilite) != bool:
-        raise TypeError(f"construireCellule : le second paramètre {visibilite} n’est pas un booléen ")
-    return {const.CONTENU : contenu, const.VISIBLE : visibilite}
+    if type(visible) != bool:
+        raise TypeError(f"construireCellule : le second paramètre {type(visible)} n’est pas un booléen ")
+    return {const.CONTENU : contenu, const.VISIBLE : visible}
 
-print(construireCellule(0, False))
+def getContenuCellule(cell : dict) -> int:
+    """
 
+    :param cellule:
+    :return:
+    """
+    if not type_cellule(cell):
+        raise TypeError("getContenuCellule : Le paramètre n’est pas une cellule.")
+    return cell.get(const.CONTENU)
+
+def isVisibleCellule(cell : dict) -> bool:
+    """
+
+    :param cellule:
+    :return:
+    """
+    if not type_cellule(cell):
+        raise TypeError("isVisibleCellule : Le paramètre n’est pas une cellule.")
+    return cell.get(const.VISIBLE)
+
+def setContenuCellule(cell : dict, x : int) -> None:
+    """
+
+    :param cellule:
+    :param x:
+    :return:
+    """
+    if not type_cellule(cell):
+        raise TypeError("setContenuCellule : Le premier paramètre n’est pas une cellule.")
+    if not type(x) == int:
+        raise TypeError("setContenuCellule : Le second paramètre n’est pas un entier.")
+    if not isContenuCorrect(x):
+        raise ValueError(f"setContenuCellule : la valeur du contenu {x} n’est pas correcte.")
+
+    cell[const.CONTENU] = x
+    return None
+
+def setVisibleCellule(cell : dict, visible : bool) -> None:
+    if not type_cellule(cell):
+        raise TypeError("setVisibleCellule : Le premier paramètre n’est pas une cellule.")
+    if not type(visible) == bool:
+        raise TypeError("setVisibleCellule : Le second paramètre n’est pas un booléen.")
+    cell[const.VISIBLE] = visible
+    return None
+
+def contientMineCellule(cell : dict) -> bool:
+    res = False
+    if not type_cellule(cell):
+        raise TypeError("contientMineCellule : Le paramètre n’est pas une cellule.")
+    if getContenuCellule(cell) == const.ID_MINE:
+        res = True
+    return res
 
 
 
