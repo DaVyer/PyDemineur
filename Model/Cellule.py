@@ -54,7 +54,7 @@ def construireCellule(contenu : int = 0, visible : bool = False) -> dict:
 def getContenuCellule(cell : dict) -> int:
     """
 
-    :param cellule:
+    :param cell:
     :return:
     """
     if not type_cellule(cell):
@@ -64,7 +64,7 @@ def getContenuCellule(cell : dict) -> int:
 def isVisibleCellule(cell : dict) -> bool:
     """
 
-    :param cellule:
+    :param cell:
     :return:
     """
     if not type_cellule(cell):
@@ -74,7 +74,7 @@ def isVisibleCellule(cell : dict) -> bool:
 def setContenuCellule(cell : dict, x : int) -> None:
     """
 
-    :param cellule:
+    :param cell:
     :param x:
     :return:
     """
@@ -89,6 +89,12 @@ def setContenuCellule(cell : dict, x : int) -> None:
     return None
 
 def setVisibleCellule(cell : dict, visible : bool) -> None:
+    """
+
+    :param cell:
+    :param visible:
+    :return:
+    """
     if not type_cellule(cell):
         raise TypeError("setVisibleCellule : Le premier paramètre n’est pas une cellule.")
     if not type(visible) == bool:
@@ -97,6 +103,11 @@ def setVisibleCellule(cell : dict, visible : bool) -> None:
     return None
 
 def contientMineCellule(cell : dict) -> bool:
+    """
+
+    :param cell:
+    :return:
+    """
     res = False
     if not type_cellule(cell):
         raise TypeError("contientMineCellule : Le paramètre n’est pas une cellule.")

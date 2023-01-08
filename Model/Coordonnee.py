@@ -64,9 +64,3 @@ def getColonneCoordonnee(coordC : tuple) -> int:
     if not isinstance(coordC, tuple):
         raise TypeError("getColonneCoordonnee : Le paramètre n’est pas une coordonnée")
     return coordC[1]
-
-
-print(getLigneCoordonnee((15,16)), getColonneCoordonnee((15,16)))
-
-
-
