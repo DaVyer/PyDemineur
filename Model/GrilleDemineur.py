@@ -104,9 +104,9 @@ def isCoordonneeCorrecte(grille : list, coord : tuple) -> bool:
     if not type(grille) == list or not type(coord) == tuple:
         raise TypeError("isCoordonneeCorrecte : un des paramètres n’est pas du bon type.")
 
-    res = True
-    if getNbLignesGrilleDemineur(grille) <= coord[0] or getNbColonnesGrilleDemineur(grille) <= coord[1]:
-        res = False
+    res = False
+    if coord[0] < len(grille) and coord[1] < len(grille[0]) and coord[0] >=0 and coord[1] >= 0:
+        res = True
     return res
 
 def getCelluleGrilleDemineur(grille : list, coord : tuple) -> dict:
@@ -143,21 +143,61 @@ def setContenuGrilleDemineur(grille : list, coord : tuple, contenu : int) -> Non
     return None
 
 def isVisibleGrilleDemineur(grille : list, coord : tuple) -> bool:
+    """
+
+    :param grille:
+    :param coord:
+    :return:
+    """
     res = False
     if isVisibleCellule(getCelluleGrilleDemineur(grille, coord)) == True:
         res = True
     return res
 
 def setVisibleGrilleDemineur(grille : list, coord : tuple, visibilite : bool) -> None:
+    """
+
+    :param grille:
+    :param coord:
+    :param visibilite:
+    :return:
+    """
     setVisibleCellule(getCelluleGrilleDemineur(grille, coord), visibilite)
     return None
 
 def contientMineGrilleDemineur(grille : list, coord : tuple) -> bool:
+    """
+
+    :param grille:
+    :param coord:
+    :return:
+    """
     res = False
     if contientMineCellule(getCelluleGrilleDemineur(grille, coord)):
         res = True
     return res
 
+def getCoordonneeVoisinsGrilleDemineur(grille : list, coord : tuple) -> list:
+    """
 
+    :param grille:
+    :param coord:
+    :return:
+    """
+    lstCoordVoisin = []
+    x = getLigneCoordonnee(coord)
+    y = getColonneCoordonnee(coord)
+
+    if not isCoordonneeCorrecte(grille, coord):
+        raise IndexError("getCoordonneeVoisinsGrilleDemineur : la coordonnée n’est pas dans la grille.")
+    if not type_grille_demineur(grille) or not type(coord) == tuple:
+        raise TypeError("getCoordonneeVoisinsGrilleDemineur : un des paramètres n’est pas du bon type.")
+
+    for i in range(x-1, x+2):
+        for j in range(y-1, y+2):
+            if isCoordonneeCorrecte(grille, (i, j)):
+                lstCoordVoisin.append((i, j))
+    lstCoordVoisin.remove((x, y))
+    return lstCoordVoisin
 
 
