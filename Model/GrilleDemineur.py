@@ -2,7 +2,7 @@
 
 from Model.Cellule import *
 from Model.Coordonnee import *
-from random import shuffle, randint
+from random import *
 from itertools import filterfalse
 
 
@@ -200,4 +200,25 @@ def getCoordonneeVoisinsGrilleDemineur(grille : list, coord : tuple) -> list:
     lstCoordVoisin.remove((x, y))
     return lstCoordVoisin
 
+def placerMinesGrilleDemineur(grille : list, nb : int, coord : tuple) -> None:
+    """
 
+    :param grille:
+    :param nb:
+    :param coord:
+    :return:
+    """
+    if nb < 0 or (getNbColonnesGrilleDemineur(grille)) * (getNbLignesGrilleDemineur(grille)) - 1 < nb:
+        raise ValueError("placerMinesGrilleDemineur : Nombre de bombes à placer incorrect.")
+    if not isCoordonneeCorrecte(grille, coord):
+        raise IndexError("placerMinesGrilleDemineur : la coordonnée n’est pas dans la grille.")
+
+    h = 0
+    while nb > h:
+        coordCellule = construireCoordonnee(randint(0, getNbLignesGrilleDemineur(grille)-1), randint(0, getNbColonnesGrilleDemineur(grille)-1))
+        if coordCellule != coord and isCoordonneeCorrecte(grille, coordCellule) and getContenuGrilleDemineur(grille, coordCellule) != const.ID_MINE:
+            setContenuGrilleDemineur(grille, coordCellule, const.ID_MINE)
+            h += 1
+    return None
+
+def
