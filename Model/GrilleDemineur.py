@@ -315,3 +315,29 @@ def reinitialiserGrilleDemineur(grille : list) -> None:
         for j in range(getNbColonnesGrilleDemineur(grille)):
             reinitialiserCellule(getCelluleGrilleDemineur(grille, (i, j)))
     return None
+
+def decouvrirGrilleDemineur(grille : list, coord : tuple) -> set:
+    """
+
+    :param grille:
+    :param coord:
+    :return:
+    """
+    case = []
+    case.append(coord)
+    ensemble = set()
+    while not len(case) == 0:
+        if not isVisibleGrilleDemineur(grille, case[0]):
+            setVisibleGrilleDemineur(grille, case[0], True)
+            ensemble.add(case[0])
+            if getContenuGrilleDemineur(grille, case[0]) == 0:
+                voisins = getCoordonneeVoisinsGrilleDemineur(grille, case[0])
+                case += voisins
+                print(voisins)
+                voisins.clear()
+                print(case)
+        case.remove(case[0])
+    return ensemble
+
+
+
