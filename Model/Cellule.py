@@ -142,6 +142,11 @@ def getAnnotationCellule(cell : dict) -> str:
     return res
 
 def changeAnnotationCellule(cell : dict) -> None:
+    """
+
+    :param cell:
+    :return:
+    """
     if not type_cellule(cell):
         raise TypeError("changeAnnotationCellule : le paramètre n’est pas une cellule")
     if getAnnotationCellule(cell) == None:

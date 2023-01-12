@@ -263,3 +263,17 @@ def getAnnotationGrilleDemineur(grille : list, coord : tuple) -> str:
     :return:
     """
     return getAnnotationCellule(getCelluleGrilleDemineur(grille, coord))
+
+def getMinesRestantesGrilleDemineur(grille : list) -> int:
+    """
+
+    :param grille:
+    :return:
+    """
+    nbrFlag = 0
+    for i in range(len(grille)):
+        for j in range(len(grille[0])):
+            coord = construireCoordonnee(i, j)
+            if getAnnotationGrilleDemineur(grille, coord) == const.FLAG:
+                nbrFlag += 1
+    return getNbMinesGrilleDemineur(grille) - nbrFlag
