@@ -117,18 +117,38 @@ def contientMineCellule(cell : dict) -> bool:
     return res
 
 def isAnnotationCorrecte(annotation : str) -> bool:
+    """
+
+    :param annotation:
+    :return:
+    """
     res = False
     if annotation == None or annotation == const.DOUTE or annotation == const.FLAG:
         res = True
     return res
 
-def getAnnotationCellule(cell : tuple) -> str:
+def getAnnotationCellule(cell : dict) -> str:
+    """
+
+    :param cell:
+    :return:
+    """
     if not type_cellule(cell):
         raise TypeError(f"getAnnotationCellule : le paramètre {cell} n’est pas une cellule")
-    if not cell.get(const.ANNOTATION):
+    if isAnnotationCorrecte(cell):
         res = None
     else:
         res = cell.get(const.ANNOTATION)
     return res
 
+def changeAnnotationCellule(cell : dict) -> None:
+    if not type_cellule(cell):
+        raise TypeError("changeAnnotationCellule : le paramètre n’est pas une cellule")
+    if getAnnotationCellule(cell) == None:
+        cell[const.ANNOTATION] = const.FLAG
+    elif getAnnotationCellule(cell) == const.FLAG:
+        cell[const.ANNOTATION] = const.DOUTE
+    elif getAnnotationCellule(cell) == const.DOUTE:
+        cell[const.ANNOTATION] = None
+    return None
 
