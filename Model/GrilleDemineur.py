@@ -278,7 +278,7 @@ def getMinesRestantesGrilleDemineur(grille : list) -> int:
                 nbrFlag += 1
     return getNbMinesGrilleDemineur(grille) - nbrFlag
 
-def gagneGrilleDemineur(grille : list) -> bool:
+def gagneGrilleDemineur(grille : list) -> bool: #Test optionnel fait précédemment
     res = True
     for i in range(getNbLignesGrilleDemineur(grille)):
         for j in range(getNbColonnesGrilleDemineur(grille)):
