@@ -279,6 +279,11 @@ def getMinesRestantesGrilleDemineur(grille : list) -> int:
     return getNbMinesGrilleDemineur(grille) - nbrFlag
 
 def gagneGrilleDemineur(grille : list) -> bool: #Test optionnel fait précédemment
+    """
+
+    :param grille:
+    :return:
+    """
     res = True
     for i in range(getNbLignesGrilleDemineur(grille)):
         for j in range(getNbColonnesGrilleDemineur(grille)):
@@ -288,6 +293,11 @@ def gagneGrilleDemineur(grille : list) -> bool: #Test optionnel fait précédemm
     return res
 
 def perduGrilleDemineur(grille : list) -> bool:
+    """
+
+    :param grille:
+    :return:
+    """
     res = False
     for i in range(getNbLignesGrilleDemineur(grille)):
         for j in range(getNbColonnesGrilleDemineur(grille)):
@@ -295,3 +305,13 @@ def perduGrilleDemineur(grille : list) -> bool:
                 res = True
     return res
 
+def reinitialiserGrilleDemineur(grille : list) -> None:
+    """
+
+    :param grille:
+    :return:
+    """
+    for i in range(getNbLignesGrilleDemineur(grille)):
+        for j in range(getNbColonnesGrilleDemineur(grille)):
+            reinitialiserCellule(getCelluleGrilleDemineur(grille, (i, j)))
+    return None

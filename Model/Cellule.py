@@ -157,3 +157,14 @@ def changeAnnotationCellule(cell : dict) -> None:
         cell[const.ANNOTATION] = None
     return None
 
+def reinitialiserCellule(cell : dict) -> None:
+    """
+
+    :param cell:
+    :return:
+    """
+    setVisibleCellule(cell, False)
+    setContenuCellule(cell, 0)
+    if getAnnotationCellule(cell) == const.FLAG or const.DOUTE:
+        cell[const.ANNOTATION] = None
+    return None
