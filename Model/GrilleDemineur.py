@@ -255,4 +255,11 @@ def getNbMinesGrilleDemineur(grille : list) -> int:
                 nbrMines += 1
     return nbrMines
 
+def getAnnotationGrilleDemineur(grille : list, coord : tuple) -> str:
+    """
 
+    :param grille:
+    :param coord:
+    :return:
+    """
+    return getAnnotationCellule(getCelluleGrilleDemineur(grille, coord))
