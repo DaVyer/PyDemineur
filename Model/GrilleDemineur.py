@@ -278,7 +278,7 @@ def getMinesRestantesGrilleDemineur(grille : list) -> int:
                 nbrFlag += 1
     return getNbMinesGrilleDemineur(grille) - nbrFlag
 
-def gagneGrilleDemineur(grille :list) -> bool:
+def gagneGrilleDemineur(grille : list) -> bool:
     res = True
     for i in range(getNbLignesGrilleDemineur(grille)):
         for j in range(getNbColonnesGrilleDemineur(grille)):
@@ -286,3 +286,12 @@ def gagneGrilleDemineur(grille :list) -> bool:
                     getAnnotationGrilleDemineur(grille, (i, j)) != const.FLAG or not contientMineGrilleDemineur(grille, (i, j)) and not isVisibleGrilleDemineur(grille, (i ,j)):
                 res = False
     return res
+
+def perduGrilleDemineur(grille : list) -> bool:
+    res = False
+    for i in range(getNbLignesGrilleDemineur(grille)):
+        for j in range(getNbColonnesGrilleDemineur(grille)):
+            if isVisibleGrilleDemineur(grille, (i, j)) and contientMineGrilleDemineur(grille ,(i, j)):
+                res = True
+    return res
+
