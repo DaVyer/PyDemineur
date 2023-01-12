@@ -254,3 +254,5 @@ def getNbMinesGrilleDemineur(grille : list) -> int:
             if getContenuGrilleDemineur(grille, coord) == const.ID_MINE:
                 nbrMines += 1
     return nbrMines
+
+

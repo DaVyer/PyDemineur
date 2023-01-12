@@ -43,13 +43,14 @@ def construireCellule(contenu : int = 0, visible : bool = False) -> dict:
 
     :param contenu: Variable représentant la valeur de la case, initialisé à 1.
     :param visibilite: Variable représentant la visibilité de la case, initialisé à False.
-    :return: La fonction retourne un dictionnaire avec comme clé le contenu et comme valeur la visibilité.
+    :return: La fonction retourne un dictionnaire avec comme clé le contenu qui vaut au départ 0, visible qui au départ vaut False \
+                    et annotation qui vaut None.
     """
     if not isContenuCorrect(contenu):
         raise ValueError(f"construireCellule : le contenu {contenu} n’est pas correct")
     if type(visible) != bool:
         raise TypeError(f"construireCellule : le second paramètre {type(visible)} n’est pas un booléen ")
-    return {const.CONTENU : contenu, const.VISIBLE : visible}
+    return {const.CONTENU : contenu, const.VISIBLE : visible, const.ANNOTATION : None}
 
 def getContenuCellule(cell : dict) -> int:
     """
@@ -115,5 +116,10 @@ def contientMineCellule(cell : dict) -> bool:
         res = True
     return res
 
+def isAnnotationCorrecte(annotation : str) -> bool:
+    res = False
+    if annotation == None or annotation == const.DOUTE or annotation == const.FLAG:
+        res = True
+    return res
 
 
