@@ -221,4 +221,19 @@ def placerMinesGrilleDemineur(grille : list, nb : int, coord : tuple) -> None:
             h += 1
     return None
 
-def
+def compterMinesVoisinesGrilleDemineur(grille : list) -> None:
+    """
+
+    :param grille:
+    :return:
+    """
+    for i in range(getNbLignesGrilleDemineur(grille)):
+        for j in range(getNbColonnesGrilleDemineur(grille)):
+            coord = construireCoordonnee(i, j)
+            if getContenuGrilleDemineur(grille, coord) != const.ID_MINE:
+                nbrMines = 0
+                for h in getCoordonneeVoisinsGrilleDemineur(grille, coord):
+                    if getContenuGrilleDemineur(grille, h) == const.ID_MINE:
+                        nbrMines += 1
+                setContenuGrilleDemineur(grille, coord, nbrMines)
+    return None
