@@ -122,4 +122,13 @@ def isAnnotationCorrecte(annotation : str) -> bool:
         res = True
     return res
 
+def getAnnotationCellule(cell : tuple) -> str:
+    if not type_cellule(cell):
+        raise TypeError(f"getAnnotationCellule : le paramètre {cell} n’est pas une cellule")
+    if not cell.get(const.ANNOTATION):
+        res = None
+    else:
+        res = cell.get(const.ANNOTATION)
+    return res
+
 
