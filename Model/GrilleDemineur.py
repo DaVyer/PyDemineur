@@ -219,6 +219,7 @@ def placerMinesGrilleDemineur(grille : list, nb : int, coord : tuple) -> None:
         if coordCellule != coord and isCoordonneeCorrecte(grille, coordCellule) and getContenuGrilleDemineur(grille, coordCellule) != const.ID_MINE:
             setContenuGrilleDemineur(grille, coordCellule, const.ID_MINE)
             h += 1
+    compterMinesVoisinesGrilleDemineur(grille)
     return None
 
 def compterMinesVoisinesGrilleDemineur(grille : list) -> None:
