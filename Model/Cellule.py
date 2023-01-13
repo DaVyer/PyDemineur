@@ -54,9 +54,12 @@ def construireCellule(contenu : int = 0, visible : bool = False) -> dict:
 
 def getContenuCellule(cell : dict) -> int:
     """
+    Cette fonction permet de renvoyer le contenu d'une cellule.
 
-    :param cell:
-    :return:
+    Si le paramètre ne correspond pas à une cellule, la fonction renvoies une TypeError, sinon elle renvoies le contenu de la case.
+
+    :param cell: Dictionnaire dans lequel les clés const.CONTENU et const.VISIBLE sont passé en paramètre.
+    :return: Retourne le contenu de la cellule.
     """
     if not type_cellule(cell):
         raise TypeError("getContenuCellule : Le paramètre n’est pas une cellule.")
@@ -64,9 +67,13 @@ def getContenuCellule(cell : dict) -> int:
 
 def isVisibleCellule(cell : dict) -> bool:
     """
+    Cette fonction permet de renvoyer si la cellule est visible ou non.
 
-    :param cell:
-    :return:
+    Si le paramètre ne correspond pas à une cellule, la fonction renvoies une TypeError, sinon la fonction renvoies un bolléen, \
+        True si la case est visible, False sinon.
+
+    :param cell: Dictionnaire dans lequel les clés const.CONTENU et const.VISIBLE sont passé en paramètre.
+    :return: Retourne un booléen, True si la case est visible, False sinon.
     """
     if not type_cellule(cell):
         raise TypeError("isVisibleCellule : Le paramètre n’est pas une cellule.")
@@ -74,10 +81,15 @@ def isVisibleCellule(cell : dict) -> bool:
 
 def setContenuCellule(cell : dict, x : int) -> None:
     """
+    Cette fonction permet de modifier le contenu d'une cellule passé en paramètre par un nombre passé en paramètre. Elle ne renvoies rien
 
-    :param cell:
-    :param x:
-    :return:
+    Si le paramètre 'cell' passé en paramètre ne correspond pas à une cellule, la fonction renvoies une TypeError. Si le type du paramètre 'x' \
+        ne correspond pas à un int, la fonction renvoies une TypeError. Si le contenu de x n'est pas correcte (ex : -3), la fonction renvoies une ValueError \
+        sinon la fonction remplace le contenu de la cellule par le nombre passé en paramètre.
+
+    :param cell: Dictionnaire dans lequel les clés const.CONTENU et const.VISIBLE sont passé en paramètre.
+    :param x: Entier passé en paramètre
+    :return: La fonction ne retourne rien
     """
     if not type_cellule(cell):
         raise TypeError("setContenuCellule : Le premier paramètre n’est pas une cellule.")
@@ -91,10 +103,15 @@ def setContenuCellule(cell : dict, x : int) -> None:
 
 def setVisibleCellule(cell : dict, visible : bool) -> None:
     """
+    Cette fonction permet de modifier la visibilité d'une cellule passé en paramètre par un bolléen passé en paramètre. Elle ne renvoies rien.
 
-    :param cell:
-    :param visible:
-    :return:
+    Si le paramètre 'cell' passé en paramètre ne correspond pas à une cellule, la fonction renvoies une TypeError. Si le type du paramètre 'visible' \
+        ne correspond pas à un booléen, la fonction renvoies une TypeError. Sinon la fonction remplace la visibilité de \
+        la cellule par la nouvelle visibilité passé en paramètre.
+
+    :param cell: Dictionnaire dans lequel les clés const.CONTENU et const.VISIBLE sont passé en paramètre.
+    :param visible: booléen passé en paramètre.
+    :return: Cette fonction ne retourne rien.
     """
     if not type_cellule(cell):
         raise TypeError("setVisibleCellule : Le premier paramètre n’est pas une cellule.")
@@ -105,9 +122,13 @@ def setVisibleCellule(cell : dict, visible : bool) -> None:
 
 def contientMineCellule(cell : dict) -> bool:
     """
+    Cette fonction permet de savoir si une cellule contient une mine ou non.
 
-    :param cell:
-    :return:
+    Si le paramètre 'cell' passé en paramètre ne correspond pas à une cellule, la fonction renvoies une TypeError. Si le contenu de la cellule \
+        est égal à const.ID_MINE la fonction renvoies True, sinon la fonction renvies False.
+
+    :param cell: Dictionnaire dans lequel les clés const.CONTENU et const.VISIBLE sont passé en paramètre.
+    :return: La fonction renvoies un booléen, si le contenu de la cellule correspond à l'id dune mine (-1), elle renvoies True, sinon elle renvoies False.
     """
     res = False
     if not type_cellule(cell):
@@ -118,9 +139,12 @@ def contientMineCellule(cell : dict) -> bool:
 
 def isAnnotationCorrecte(annotation : str) -> bool:
     """
+    Cette fonction permet de vérifier si l'annotation d'une cellule correspond bien à None, const.DOUTE ou const.FLAG.
 
-    :param annotation:
-    :return:
+    Si le paramètre passé ne correspond pas à None, const.Doute ou const.FLAG, la fonction renvoies False, sinon la fonction renvoies True.
+
+    :param annotation: Chaine de charactère passé en paramètre correspondant à 'Doute', 'Flag' ou None.
+    :return: La fonction renvoies un booléen.
     """
     res = False
     if annotation == None or annotation == const.DOUTE or annotation == const.FLAG:
@@ -129,9 +153,13 @@ def isAnnotationCorrecte(annotation : str) -> bool:
 
 def getAnnotationCellule(cell : dict) -> str:
     """
+    Cette fonction permet de récupérer l'annotation d'une cellule.
 
-    :param cell:
-    :return:
+    Si le paramètre 'cell' ne correspond pas à une cellule, la fonction renvoies une TypeError, si const.ANNOTATION dans la cell n'ai pas correcte, \
+        la fonction renvoies None. Sinon la fonction renvoies l'annotation du paramètre.
+
+    :param cell: Dictionnaire dans lequel les clés const.CONTENU, const.VISIBLE et const.ANNOTATION sont passé en paramètre.
+    :return: la fonction retourne res, correspondant soit à l'annotation de la cellule, soit à None.
     """
     if not type_cellule(cell):
         raise TypeError(f"getAnnotationCellule : le paramètre {cell} n’est pas une cellule")
@@ -143,9 +171,14 @@ def getAnnotationCellule(cell : dict) -> str:
 
 def changeAnnotationCellule(cell : dict) -> None:
     """
+    Cette fonction change l'annotation d'une cellule.
 
-    :param cell:
-    :return:
+    Si le poaramètre 'cell' ne correspond pas à une cellule, la fonction renvoies un TypeError. Si l'annotation de la cellule correspond à None, elle est \
+        remplacé par const.Flag, si l'annotation de la cellule correspond à const.Flag, elle est remplacé par const.Doute, enfin, si l'annotation de la \
+        cellule correspond à const.Doute, elle est remplacé par None.
+
+    :param cell: Dictionnaire dans lequel les clés const.CONTENU, const.VISIBLE et const.ANNOTATION sont passé en paramètre.
+    :return: La fonction ne renvoies rien.
     """
     if not type_cellule(cell):
         raise TypeError("changeAnnotationCellule : le paramètre n’est pas une cellule")
@@ -159,9 +192,12 @@ def changeAnnotationCellule(cell : dict) -> None:
 
 def reinitialiserCellule(cell : dict) -> None:
     """
+    Cette fonction permet de réintialiser une cellule.
 
-    :param cell:
-    :return:
+    La fonction met à False const.VISIBLE, 0 const.CONTENU et si l'annotation correspond à const.FLAG ou const.DOUTE elle le remplace par None.
+
+    :param cell: Dictionnaire dans lequel les clés const.CONTENU, const.VISIBLE et const.ANNOTATION sont passé en paramètre.
+    :return: La fonction ne renvoies rien.
     """
     setVisibleCellule(cell, False)
     setContenuCellule(cell, 0)
