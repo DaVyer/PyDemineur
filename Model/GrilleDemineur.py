@@ -128,6 +128,10 @@ def isCoordonneeCorrecte(grille : list, coord : tuple) -> bool:
 
 def getCelluleGrilleDemineur(grille : list, coord : tuple) -> dict:
     """
+    Cette fonction permet de récupérer une cellule du tableau.
+
+    Si le type de la grille n'est pas bon ou que le type de la coord n'est pas bon, la fonction renvoies une RaiseError. Si la coordonnée n'est pas correcte \
+        La fonction renvoies une IndexError. Sinon la fonction renvoies la coordonnée, étant un tuple, de la case sur laquelle on vient de cliquer.
 
     :param grille: Tableau correspondant à une liste passé en paramètre.
     :param coord: Coordonnée de la case cliqué passé en paramètre et correspondant à un tuple.
@@ -141,30 +145,39 @@ def getCelluleGrilleDemineur(grille : list, coord : tuple) -> dict:
 
 def getContenuGrilleDemineur(grille : list, coord : tuple) -> dict:
     """
+    Cette fonction permet de récupérer le contenu d'une cellule.
 
-    :param grille:
-    :param coord:
-    :return:
+    La fonction renvoies le contenu de la cellule.
+
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :param coord: Coordonnée de la case cliqué passé en paramètre et correspondant à un tuple.
+    :return: Retourne un dictionnaire.
     """
     return getContenuCellule(getCelluleGrilleDemineur(grille, coord))
 
 def setContenuGrilleDemineur(grille : list, coord : tuple, contenu : int) -> None:
     """
+    La fonction permet de modifier le contenu de la cellule.
 
-    :param grille:
-    :param coord:
-    :param contenu:
-    :return:
+    La fonction ne retourne rien mais modifie quand même le contenu de la case sur laquelle on a cliqué par l'entier passé en paramètre.
+
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :param coord: Coordonnée de la case cliqué passé en paramètre et correspondant à un tuple.
+    :param contenu: Contenu de la cellule correspondant à un entier.
+    :return: Cette fonction ne retourne rien.
     """
     setContenuCellule(getCelluleGrilleDemineur(grille, coord), contenu)
     return None
 
 def isVisibleGrilleDemineur(grille : list, coord : tuple) -> bool:
     """
+    Cette fonction détermine si la case sur laquelle on a cliqué est visible ou non.
 
-    :param grille:
-    :param coord:
-    :return:
+    Si la case sur laquelle on a cliqué est Visible, soit que const.VISIBLE soit égale à True, la fonction renvoie True, sinon elle renvoies False.
+
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :param coord: Coordonnée de la case cliqué passé en paramètre et correspondant à un tuple.
+    :return: Cette fonction rentourne un booléen.
     """
     res = False
     if isVisibleCellule(getCelluleGrilleDemineur(grille, coord)) == True:
@@ -173,21 +186,27 @@ def isVisibleGrilleDemineur(grille : list, coord : tuple) -> bool:
 
 def setVisibleGrilleDemineur(grille : list, coord : tuple, visibilite : bool) -> None:
     """
+    Cette fonction permet de modifier la visibilité de la cellule par la visibilité passé en paramètre.
 
-    :param grille:
-    :param coord:
-    :param visibilite:
-    :return:
+    La fonction ne renvoies rien mais modifie la valeur const.VISIBLE de la cellule par le paramètre passé.
+
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :param coord: Coordonnée de la case cliqué passé en paramètre et correspondant à un tuple.
+    :param visibilite: La visibilité correspond à un booléen qui correspond à si la case est visible ou non
+    :return: Cette fonction ne retourne rien
     """
     setVisibleCellule(getCelluleGrilleDemineur(grille, coord), visibilite)
     return None
 
 def contientMineGrilleDemineur(grille : list, coord : tuple) -> bool:
     """
+    Cette fonction permet de déterminer si une cellule contient une mine.
 
-    :param grille:
-    :param coord:
-    :return:
+    Si la cellule contient une mine, la fonction renvoies True, sinon elle renvoies False.
+
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :param coord: Coordonnée de la case cliqué passé en paramètre et correspondant à un tuple.
+    :return: Cette fonction ne retourne un booléen.
     """
     res = False
     if contientMineCellule(getCelluleGrilleDemineur(grille, coord)):
@@ -196,10 +215,15 @@ def contientMineGrilleDemineur(grille : list, coord : tuple) -> bool:
 
 def getCoordonneeVoisinsGrilleDemineur(grille : list, coord : tuple) -> list:
     """
+    Cette fonction permet de récupérer les coordonnées de tous les voisins d'une cellule.
 
-    :param grille:
-    :param coord:
-    :return:
+    Si la la coordonnée passé en paramètre n'est pas correcte, la fonction renvoies un IndexError. Si la type de la grille n'est pas correcte \
+        et que le type de la coord n'est pas un tuple, la fonction renvoies une TypeError. Sinon la fonction renvoies une liste des coordonnées des voisins \
+        de la cellule passé en paramètre.
+
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :param coord: Coordonnée de la case cliqué passé en paramètre et correspondant à un tuple.
+    :return: Cette fonction retourne une liste.
     """
     lstCoordVoisin = []
     x = getLigneCoordonnee(coord)
@@ -219,11 +243,15 @@ def getCoordonneeVoisinsGrilleDemineur(grille : list, coord : tuple) -> list:
 
 def placerMinesGrilleDemineur(grille : list, nb : int, coord : tuple) -> None:
     """
+    Cette fonction permet de placer le nombre exacte de bombe passé en paramètre dans la grille.
 
-    :param grille:
-    :param nb:
-    :param coord:
-    :return:
+    Si le nombre passé en paramètre est inférieur à 0 et que la taille de la grille - 1 est inférieur au nombre passé en paramètre, la fonction renvoies \
+        une ValueError. Si la coordonné n'est pas correcte, la fonction renvoies une IndexError. Sinon la fonction place le nombre de mine exacte dans le tableau.
+
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :param nb: Le paramètre est un entier correspondant au nombre de mine que l'on veut placer dans la grille.
+    :param coord: Coordonnée de la case passé en paramètre et correspondant à un tuple.
+    :return: Cette fonction ne retourne rien.
     """
     if nb < 0 or (getNbColonnesGrilleDemineur(grille)) * (getNbLignesGrilleDemineur(grille)) - 1 < nb:
         raise ValueError("placerMinesGrilleDemineur : Nombre de bombes à placer incorrect.")
@@ -241,9 +269,12 @@ def placerMinesGrilleDemineur(grille : list, nb : int, coord : tuple) -> None:
 
 def compterMinesVoisinesGrilleDemineur(grille : list) -> None:
     """
+    Cette fonction permet de compter le nombre de mine voisines pour chaque case du tableau.
 
-    :param grille:
-    :return:
+    La fonction ne renvoies rien.
+
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :return: Cette fonction ne retourne rien.
     """
     for i in range(getNbLignesGrilleDemineur(grille)):
         for j in range(getNbColonnesGrilleDemineur(grille)):
@@ -258,9 +289,12 @@ def compterMinesVoisinesGrilleDemineur(grille : list) -> None:
 
 def getNbMinesGrilleDemineur(grille : list) -> int:
     """
+    Cette fonction permet de savoir combien de mine sont contenu dans la grille (ça affiche le résultat quand on lance le jeu).
 
-    :param grille:
-    :return:
+    Si la grille n'est pas du bon type, la fonction renvoies une ValueError. Sinon elle renvoies le nombre de mine contenu dans la grille.
+
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :return: Cette fonction retourne un entier correspondant au nombre de mine.
     """
     if not type_grille_demineur(grille):
         raise ValueError("getNbMinesGrilleDemineur : le paramètre n’est pas une grille.")
@@ -274,18 +308,24 @@ def getNbMinesGrilleDemineur(grille : list) -> int:
 
 def getAnnotationGrilleDemineur(grille : list, coord : tuple) -> str:
     """
+    Cette fonction permet de récupérer l'annotation contenu dans une cellule sur un case donné.
 
-    :param grille:
-    :param coord:
-    :return:
+    Elle renvoies l'annotation contenu dans la cellule.
+
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :param coord: Coordonnée de la case cliqué passé en paramètre et correspondant à un tuple.
+    :return: Cette fonction renvoies un str correspondant à l'annotation de la cellule sur laquelle on a cliqué.
     """
     return getAnnotationCellule(getCelluleGrilleDemineur(grille, coord))
 
 def getMinesRestantesGrilleDemineur(grille : list) -> int:
     """
+    Cette fonction permet de récupérer le nombre de mines restantes dans le jeu.
 
-    :param grille:
-    :return:
+    La fonction renvoies le nombre de mines restant dans la grille.
+
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :return: La fonction renvoies un entier correspondant au nombres de mines restantes dans la grille.
     """
     nbrFlag = 0
     for i in range(len(grille)):
@@ -297,9 +337,12 @@ def getMinesRestantesGrilleDemineur(grille : list) -> int:
 
 def gagneGrilleDemineur(grille : list) -> bool: #Test optionnel fait précédemment
     """
+    Cette fonction permet de déterminer si l'on a gagner la partie ou non.
 
-    :param grille:
-    :return:
+    Si l'on a déterminer toute les bombes et que toutes les cases ont été révélées, la fonction renvoies False, sinon elle renvoies True.
+
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :return: Cette fonction renvoies un booléen correspondant à si on a gagner la partie ou non.
     """
     res = True
     for i in range(getNbLignesGrilleDemineur(grille)):
@@ -311,9 +354,12 @@ def gagneGrilleDemineur(grille : list) -> bool: #Test optionnel fait précédemm
 
 def perduGrilleDemineur(grille : list) -> bool:
     """
+    Cette fonction permet de déterminer si l'on a perdu la partie ou non.
 
-    :param grille:
-    :return:
+    Si l'on a révélé une cellule contenant une bombe, la fonction renvoies True, sinon la fonction renvoies False.
+
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :return: Cette fonction renvoies un booléen correspondant à si on a perdu la partie ou non.
     """
     res = False
     for i in range(getNbLignesGrilleDemineur(grille)):
@@ -324,9 +370,12 @@ def perduGrilleDemineur(grille : list) -> bool:
 
 def reinitialiserGrilleDemineur(grille : list) -> None:
     """
+    Cette fonction permet de réinitialiser toutes les cases de la grille.
 
-    :param grille:
-    :return:
+    Elle ne renvoies rien et modifie toutes les cases de la grille.
+
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :return: Cette fonction ne renvoies rien.
     """
     for i in range(getNbLignesGrilleDemineur(grille)):
         for j in range(getNbColonnesGrilleDemineur(grille)):
@@ -335,10 +384,13 @@ def reinitialiserGrilleDemineur(grille : list) -> None:
 
 def decouvrirGrilleDemineur(grille : list, coord : tuple) -> set:
     """
+    Cette fonction permet de découvrir les cellule voisines de la grille quand celle-ci vaut 0.
 
-    :param grille:
-    :param coord:
-    :return:
+    Elle renvoies un ensemble.
+
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :param coord: Coordonnée de la case cliqué passé en paramètre et correspondant à un tuple.
+    :return: Cette fonction renvoies un ensemble.
     """
     case = []
     case.append(coord)
@@ -357,10 +409,13 @@ def decouvrirGrilleDemineur(grille : list, coord : tuple) -> set:
 
 def simplifierGrilleDemineur(grille : list, coord : tuple) -> set:
     """
+    Cette fonction permet de simplifier automatiquement les zones "sûrs" alentours à une cellule donnée.
 
-    :param grille:
-    :param coord:
-    :return:
+    Cette fonction renvoies aussi un ensemble.
+
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :param coord: Coordonnée de la case cliqué passé en paramètre et correspondant à un tuple.
+    :return: Cette fonction renvoies un ensemble.
     """
     case = []
     case.append(coord)
@@ -382,3 +437,54 @@ def simplifierGrilleDemineur(grille : list, coord : tuple) -> set:
                             case.append(coordVoisin)
     return ensemble
 
+def ajouterFlagsGrilleDemineur(grille : list, coord : tuple) -> set:
+    """
+    Cette fonction permet d'ajouter des drapeaux sur les zones qui sont sûrs de contenir des bombes.
+
+    Cette fonction retourne aussi un ensemble.
+
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :param coord: Coordonnée de la case cliqué passé en paramètre et correspondant à un tuple.
+    :return: Cette fonction renvoies un ensemble.
+    """
+    case = []
+    case.append(coord)
+    ensemble = set()
+    while not len(case) == 0:
+        coord = case.pop()
+        nbrCaseNonDecouverte = 0
+        if not isVisibleGrilleDemineur(grille, coord):
+            lstVoisinNonDecouvert = getCoordonneeVoisinsGrilleDemineur(grille, coord)
+            for coordVoisin in lstVoisinNonDecouvert:
+                if getAnnotationGrilleDemineur(grille, coordVoisin) != const.FLAG:
+                    nbrCaseNonDecouverte += 1
+            if getContenuGrilleDemineur(grille, coord) == nbrCaseNonDecouverte:
+                for coordVoisin in lstVoisinNonDecouvert:
+                    if not isVisibleGrilleDemineur(grille, coordVoisin):
+                        if getAnnotationGrilleDemineur(grille, coordVoisin) == None:
+                            coordVoisin[const.ANNOTATION] = const.FLAG
+                            ensemble.add(coordVoisin)
+                            case.append(coordVoisin)
+    return ensemble
+
+def simplifierToutGrilleDemineur(grille : list) -> tuple:
+    """
+    Cette fonction fait office "d'IA" basique consistant à résoudre automatiquement le démineur.
+
+    Elle renvoies un ensemble.
+
+    :param grille:
+    :return:
+    """
+    ensemble1 = set()
+    ensemble2 = set()
+    modif = True
+    while modif:
+        modif = False
+        for i in range(getNbLignesGrilleDemineur(grille)):
+            for j in range(getNbColonnesGrilleDemineur(grille)):
+                ensemble1.update(simplifierGrilleDemineur(grille, (i, j)))
+                ensemble2.update(ajouterFlagsGrilleDemineur(grille, (i, j)))
+                if len(ensemble1) != 0 or len(ensemble2) != 0:
+                    modif = True
+    return (ensemble1, ensemble2)
