@@ -54,10 +54,15 @@ def type_grille_demineur(grille: list) -> bool:
 
 def construireGrilleDemineur(nbLignes : int, nbCollones : int) -> list:
     """
+    Cette fonction permet de construire une grille avec x nbLignes et y nbCollones qui sont des entiers et elle renvoies une liste.
 
-    :param nbLignes:
-    :param nbCollones:
-    :return:
+    Si le nb de lignes est inférieur à 1 ou que le nb de collones est inférieur à 1, la fonction renvoies une ValueError. Si le type du paramètre nbLignes \
+        ou le type du paramètre nbCollones ne sont pas des entiers, la fonction renvoies une TypeError. Sinon la fonction crée une grille de n collones et n lignes \
+        et renvoies une grille, un tableau de tableau.
+
+    :param nbLignes: Entier passé en paramètre.
+    :param nbCollones: Entier passé en paramètre
+    :return: retourne un tableau.
     """
     if nbLignes < 1 or nbCollones < 1:
         raise ValueError(f"construireGrilleDemineur : Le nombre de lignes {nbLignes} \
@@ -75,9 +80,12 @@ def construireGrilleDemineur(nbLignes : int, nbCollones : int) -> list:
 
 def getNbLignesGrilleDemineur(grille : list) -> int:
     """
+    Cette fonction récupère le nombre de ligne d'une grille.
 
-    :param grille:
-    :return:
+    Si le paramètre 'grille' n'est pas du bon type, la fonction renvoies une TypeError, sinon elle renvoies le nombre de ligne de la grille.
+
+    :param grille: Dictionnaire passé en paramètre.
+    :return: Un entier correspondant au nombre de lignes dans le tableau.
     """
     if not type_grille_demineur(grille):
         raise TypeError("getNbColonnesGrilleDemineur : Le paramètre n’est pas une grille.")
@@ -85,9 +93,12 @@ def getNbLignesGrilleDemineur(grille : list) -> int:
 
 def getNbColonnesGrilleDemineur(grille : list) -> int:
     """
+    Cette fonction récupère le nombre de collone d'une grille.
 
-    :param grille:
-    :return:
+    Si le paramètre 'grille' n'est pas du bon type, la fonction renvoies une TypeError, sinon elle renvoies le nombre de collone de la grille.
+
+    :param grille: Dictionnaire passé en paramètre.
+    :return: Un entier correspondant au nombre de collones dans le tableau.
     """
     if not type_grille_demineur((grille)):
         raise TypeError("getNbColonnesGrilleDemineur : Le paramètre n’est pas une grille.")
@@ -96,25 +107,31 @@ def getNbColonnesGrilleDemineur(grille : list) -> int:
 
 def isCoordonneeCorrecte(grille : list, coord : tuple) -> bool:
     """
+    Cette fonction permet de vérifier si une coordonnée est correcte.
 
-    :param grille:
-    :param coord:
-    :return:
+    Si le type de la grille n'est pas une liste ou que le type de la coord n'est pas un tuple la fonction renvoies une typeError. \
+        Si la coord[0] est plus petit que le nombre de ligne et que la coord[1] est plus petit que le nombre de collones dans le tableau \
+        et que le nombre de ligne passé en paramètre est supérieur ou égale à 0 et que le nombre de collone est supérieur ou égale à 0, la fonction renvoies True \
+        sinon elle renvoies False.
+
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :param coord: Coordonnée de la case cliqué passé en paramètre et correspondant à un tuple.
+    :return: Retourne un booléen.
     """
     if not type(grille) == list or not type(coord) == tuple:
         raise TypeError("isCoordonneeCorrecte : un des paramètres n’est pas du bon type.")
 
     res = False
-    if coord[0] < len(grille) and coord[1] < len(grille[0]) and coord[0] >=0 and coord[1] >= 0:
+    if coord[0] < len(grille) and coord[1] < len(grille[0]) and coord[0] >= 0 and coord[1] >= 0:
         res = True
     return res
 
 def getCelluleGrilleDemineur(grille : list, coord : tuple) -> dict:
     """
 
-    :param grille:
-    :param coord:
-    :return:
+    :param grille: Tableau correspondant à une liste passé en paramètre.
+    :param coord: Coordonnée de la case cliqué passé en paramètre et correspondant à un tuple.
+    :return: Retourne un dictionnaire.
     """
     if not type_grille_demineur(grille) or not type(coord) == tuple:
         raise TypeError("getCelluleGrilleDemineur : un des paramètres n’est pas du bon type.")
@@ -333,11 +350,35 @@ def decouvrirGrilleDemineur(grille : list, coord : tuple) -> set:
             if getContenuGrilleDemineur(grille, case[0]) == 0:
                 voisins = getCoordonneeVoisinsGrilleDemineur(grille, case[0])
                 case += voisins
-                print(voisins)
                 voisins.clear()
-                print(case)
         case.remove(case[0])
     return ensemble
 
 
+def simplifierGrilleDemineur(grille : list, coord : tuple) -> set:
+    """
+
+    :param grille:
+    :param coord:
+    :return:
+    """
+    case = []
+    case.append(coord)
+    ensemble = set()
+    while not len(case) == 0:
+        coord = case.pop()
+        nbrFlag = 0
+        if isVisibleGrilleDemineur(grille, coord) == True:
+            lstVoisin = getCoordonneeVoisinsGrilleDemineur(grille, coord)
+            for coordVoisin in lstVoisin:
+                if getAnnotationGrilleDemineur(grille, coordVoisin) == const.FLAG:
+                    nbrFlag += 1
+            if getContenuGrilleDemineur(grille, coord) == nbrFlag:
+                for coordVoisin in lstVoisin:
+                    if not isVisibleGrilleDemineur(grille, coordVoisin):
+                        if getAnnotationGrilleDemineur(grille, coordVoisin) == None:
+                            setVisibleGrilleDemineur(grille, coordVoisin, True)
+                            ensemble.add(coordVoisin)
+                            case.append(coordVoisin)
+    return ensemble
 
