@@ -437,8 +437,10 @@ def simplifierGrilleDemineur(grille : list, coord : tuple) -> set:
                             case.append(coordVoisin)
     return ensemble
 
+#En pratique je pense que la fonction simplifierToutGrilleDecouvert fonctionne mais je ne vois pas comment faire ajouterFlagsGrilleDemineur et je n'ai plus le temps.
+"""
 def ajouterFlagsGrilleDemineur(grille : list, coord : tuple) -> set:
-    """
+    
     Cette fonction permet d'ajouter des drapeaux sur les zones qui sont sûrs de contenir des bombes.
 
     Cette fonction retourne aussi un ensemble.
@@ -446,7 +448,7 @@ def ajouterFlagsGrilleDemineur(grille : list, coord : tuple) -> set:
     :param grille: Tableau correspondant à une liste passé en paramètre.
     :param coord: Coordonnée de la case cliqué passé en paramètre et correspondant à un tuple.
     :return: Cette fonction renvoies un ensemble.
-    """
+    
     case = []
     case.append(coord)
     ensemble = set()
@@ -457,6 +459,7 @@ def ajouterFlagsGrilleDemineur(grille : list, coord : tuple) -> set:
             lstVoisinNonDecouvert = getCoordonneeVoisinsGrilleDemineur(grille, coord)
             for coordVoisin in lstVoisinNonDecouvert:
                 if getAnnotationGrilleDemineur(grille, coordVoisin) != const.FLAG:
+                    print(nbrCaseNonDecouverte)
                     nbrCaseNonDecouverte += 1
             if getContenuGrilleDemineur(grille, coord) == nbrCaseNonDecouverte:
                 for coordVoisin in lstVoisinNonDecouvert:
@@ -465,17 +468,19 @@ def ajouterFlagsGrilleDemineur(grille : list, coord : tuple) -> set:
                             coordVoisin[const.ANNOTATION] = const.FLAG
                             ensemble.add(coordVoisin)
                             case.append(coordVoisin)
+                            print(coordVoisin)
+                            print(case)
     return ensemble
 
 def simplifierToutGrilleDemineur(grille : list) -> tuple:
-    """
+    
     Cette fonction fait office "d'IA" basique consistant à résoudre automatiquement le démineur.
 
     Elle renvoies un ensemble.
 
     :param grille:
     :return:
-    """
+    
     ensemble1 = set()
     ensemble2 = set()
     modif = True
@@ -488,3 +493,5 @@ def simplifierToutGrilleDemineur(grille : list) -> tuple:
                 if len(ensemble1) != 0 or len(ensemble2) != 0:
                     modif = True
     return (ensemble1, ensemble2)
+
+"""
