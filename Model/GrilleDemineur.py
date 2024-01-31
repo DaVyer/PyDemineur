@@ -1,11 +1,11 @@
 # GrilleDemineur.py
 
+from itertools import filterfalse
+from random import *
+
 from Model.Cellule import *
 from Model.Coordonnee import *
-from random import *
-from itertools import filterfalse
-
-
+import Model.Constantes
 # Méthode gérant la grille du démineur
 # La grille d'un démineur est un tableau 2D régulier (rectangulaire)
 #
@@ -417,81 +417,73 @@ def simplifierGrilleDemineur(grille : list, coord : tuple) -> set:
     :param coord: Coordonnée de la case cliqué passé en paramètre et correspondant à un tuple.
     :return: Cette fonction renvoies un ensemble.
     """
-    case = []
-    case.append(coord)
-    ensemble = set()
-    while not len(case) == 0:
-        coord = case.pop()
-        nbrFlag = 0
-        if isVisibleGrilleDemineur(grille, coord) == True:
-            lstVoisin = getCoordonneeVoisinsGrilleDemineur(grille, coord)
-            for coordVoisin in lstVoisin:
-                if getAnnotationGrilleDemineur(grille, coordVoisin) == const.FLAG:
-                    nbrFlag += 1
-            if getContenuGrilleDemineur(grille, coord) == nbrFlag:
-                for coordVoisin in lstVoisin:
-                    if not isVisibleGrilleDemineur(grille, coordVoisin):
-                        if getAnnotationGrilleDemineur(grille, coordVoisin) == None:
-                            setVisibleGrilleDemineur(grille, coordVoisin, True)
-                            ensemble.add(coordVoisin)
-                            case.append(coordVoisin)
-    return ensemble
+    celluleDecouverte = set()
+    celluleADecouvrir = {coord}
+    compteurFlag = 0
+    while len(celluleADecouvrir) > 0:
+        coord = celluleADecouvrir.pop()
+        if isVisibleGrilleDemineur(grille, coord):
+            celluleDecouverte.add(coord)
+            for voisins in getCoordonneeVoisinsGrilleDemineur(grille, coord):
+                if getAnnotationGrilleDemineur(grille, voisins) == const.FLAG:
+                    compteurFlag += 1
+            if compteurFlag == getContenuGrilleDemineur(grille, coord):
+                setVisibleGrilleDemineur(grille, coord, True)
+                for voisins in getCoordonneeVoisinsGrilleDemineur(grille, coord):
+                    if (getAnnotationGrilleDemineur(grille, voisins) != const.FLAG) and not isVisibleGrilleDemineur(
+                            grille, voisins) \
+                            and not contientMineGrilleDemineur(grille, voisins):
+                        setVisibleGrilleDemineur(grille, voisins, True)
+                        celluleDecouverte.add(voisins)
+    return celluleDecouverte
 
 #En pratique je pense que la fonction simplifierToutGrilleDecouvert fonctionne mais je ne vois pas comment faire ajouterFlagsGrilleDemineur et je n'ai plus le temps.
-"""
-def ajouterFlagsGrilleDemineur(grille : list, coord : tuple) -> set:
-    
-    Cette fonction permet d'ajouter des drapeaux sur les zones qui sont sûrs de contenir des bombes.
 
-    Cette fonction retourne aussi un ensemble.
+def ajouterFlagsGrilleDemineur(grille: list, coordonnee: tuple) -> set:
+    """
+     La fonction reçoit en paramètre une grille de démineur et la coordonnée de la cellule à vérifier.
+     Si le contenu de la cellule correspond au nombre de cases non découvertes dans le voisinage, alors la
+    fonction place un drapeau sur celles qui n’en n’ont pas.
+    La fonction retourne l’ensemble des coordonnées des cellules sur lesquelles elle a placé un drapeau.
 
-    :param grille: Tableau correspondant à une liste passé en paramètre.
-    :param coord: Coordonnée de la case cliqué passé en paramètre et correspondant à un tuple.
-    :return: Cette fonction renvoies un ensemble.
-    
-    case = []
-    case.append(coord)
-    ensemble = set()
-    while not len(case) == 0:
-        coord = case.pop()
-        nbrCaseNonDecouverte = 0
-        if not isVisibleGrilleDemineur(grille, coord):
-            lstVoisinNonDecouvert = getCoordonneeVoisinsGrilleDemineur(grille, coord)
-            for coordVoisin in lstVoisinNonDecouvert:
-                if getAnnotationGrilleDemineur(grille, coordVoisin) != const.FLAG:
-                    print(nbrCaseNonDecouverte)
-                    nbrCaseNonDecouverte += 1
-            if getContenuGrilleDemineur(grille, coord) == nbrCaseNonDecouverte:
-                for coordVoisin in lstVoisinNonDecouvert:
-                    if not isVisibleGrilleDemineur(grille, coordVoisin):
-                        if getAnnotationGrilleDemineur(grille, coordVoisin) == None:
-                            coordVoisin[const.ANNOTATION] = const.FLAG
-                            ensemble.add(coordVoisin)
-                            case.append(coordVoisin)
-                            print(coordVoisin)
-                            print(case)
-    return ensemble
+    :param grille: Une grille de démineur (de type list).
+    :param coordonnee: Une coordonnée (de type tuple).
+    :return:  La fonction retourne l’ensemble des coordonnées des cellules sur lesquelles elle a placé un drapeau.
+    """
+    celluleMarque = set()
+    if isVisibleGrilleDemineur(grille, coordonnee):
+        celluleADecouvrir = 0
+        ListeVoisins = []
+        for voisins in getCoordonneeVoisinsGrilleDemineur(grille, coordonnee):
+            if not isVisibleGrilleDemineur(grille, voisins):
+                celluleADecouvrir += 1
+                ListeVoisins.append(voisins)
+        if celluleADecouvrir == getContenuGrilleDemineur(grille, coordonnee):
+            for voisins in ListeVoisins:
+                if (not isVisibleGrilleDemineur(grille, voisins)) and (getAnnotationGrilleDemineur(grille, voisins) == None):
+                    changeAnnotationCellule(getCelluleGrilleDemineur(grille, voisins))
+                    celluleMarque.add(voisins)
+    return celluleMarque
 
-def simplifierToutGrilleDemineur(grille : list) -> tuple:
-    
-    Cette fonction fait office "d'IA" basique consistant à résoudre automatiquement le démineur.
+def simplifierToutGrilleDemineur(grille: list) -> tuple:
+    """
+    La fonction reçoit en paramètre une grille de démineur et qui retourne un tuple
+    contenant en premier l’ensemble des coordonnées des cellules rendues visible
+    et en second l’ensemble des coordonnées des cellules sur lesquelles a été ajouté un drapeau.
+    Cette fonction parcourt toutes les cellules de la grille et tente de les simplifier en appelant
+    simplifierGrilleDemineur et ajouterFlagsGrilleDemineur. Tant qu’il y a des
+    modifications, la fonction reparcourt les cellules pour trouver des simplifications.
 
-    Elle renvoies un ensemble.
+    :param grille: Une grille de démineur (de type list).
+    :return: La fonction retourne un tuple contenant en premier l’ensemble des coordonnées des cellules rendues visible
+    et en second l’ensemble des coordonnées des cellules sur lesquelles a été ajouté un drapeau.
+    """
+    flag = set()
+    visible = set()
+    for y in range(0, getNbLignesGrilleDemineur(grille) - 1):
+        for x in range(0, getNbColonnesGrilleDemineur(grille) - 1):
+            coordonnes = (y, x)
+            visible.update(simplifierGrilleDemineur(grille, coordonnes))
+            flag.update(ajouterFlagsGrilleDemineur(grille, coordonnes))
+    return (visible, flag)
 
-    :param grille:
-    :return:
-    
-    ensemble1 = set()
-    ensemble2 = set()
-    modif = True
-    while modif:
-        modif = False
-        for i in range(getNbLignesGrilleDemineur(grille)):
-            for j in range(getNbColonnesGrilleDemineur(grille)):
-                ensemble1.update(simplifierGrilleDemineur(grille, (i, j)))
-                ensemble2.update(ajouterFlagsGrilleDemineur(grille, (i, j)))
-                if len(ensemble1) != 0 or len(ensemble2) != 0:
-                    modif = True
-    return (ensemble1, ensemble2)
-
-"""
